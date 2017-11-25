@@ -10,12 +10,10 @@ get '/' => sub {
 };
 
 get '/aj/whois' => sub {
-    my $dominfo = whois('perl.org');
-    my $ret;
-    foreach my $it(split /\n/, $dominfo){
-        $ret=$1 if $it=~/Name Server: (.*)$/;
+    my @dominfo = split /\n/, whois('perl.org');
+    for ( reverse @dominfo ) {
+        send_as JSON => { text => $1 } if /Name Server: (\S+)/;
     }
-    send_as JSON => { text => $ret };
 };
 
 
