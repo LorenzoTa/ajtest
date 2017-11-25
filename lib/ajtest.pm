@@ -1,6 +1,6 @@
 package ajtest;
 use Dancer2;
-use LWP::UserAgent;
+use HTTP::Tiny;
 use Net::Whois::Raw;
 
 our $VERSION = '0.11';
@@ -32,9 +32,9 @@ get '/aj/ping' => sub {
 };
 
 get '/aj/lwp' => sub {
-    my $ua = LWP::UserAgent->new;
-    my $r = $ua->get('http://www.perl.org/');
-    send_as JSON => { text => $r->code." ".$r->message };
+    my $url = 'http://www.perl.org/';
+    my $ua = HTTP::Tiny->new;
+    send_as JSON => { text => join ' ', @{ $ua->get($url) }{'status','reason'} };
 };
 
 true;
