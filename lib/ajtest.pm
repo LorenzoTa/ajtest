@@ -1,6 +1,7 @@
 package ajtest;
 use Dancer2;
 use HTTP::Tiny;
+use Net::Ping;
 use Net::Whois::Raw;
 
 our $VERSION = '0.11';
@@ -16,17 +17,9 @@ get '/aj/whois' => sub {
     }
 };
 
-
 get '/aj/ping' => sub {
-     open my $cmd,'ping -n 4 www.perl.org|';
-     my $ret;
-     while (<$cmd>){
-        if($_=~/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/){
-            $ret = $1;
-        
-        }
-     }
-     send_as JSON => { text => "$ret" };
+     my $ping = Net::Ping->new;
+     send_as JSON => { text => ($ping->ping('www.perl.org'))[2] };
 };
 
 get '/aj/lwp' => sub {
