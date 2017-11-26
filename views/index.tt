@@ -1,0 +1,28 @@
+<div>
+  <span class="label">WHOIS:</span><span id="whois"></span>
+</div>
+<div>
+  <span class="label">PING:</span><span id="ping"></span>
+</div>
+<div>
+  <span class="label">LWP:</span><span id="LWP"></span>
+</div>
+
+<script>
+  $(document).ready(function() {
+      jQuery.get('/aj/whois', function(data) {
+          console.log(data);
+          $("#whois").append(data["text"]);
+      });
+
+      jQuery.get('/aj/ping', function(data) {
+            console.log(data);
+            $("#ping").append(data["text"]);
+      });
+
+      jQuery.get('/aj/lwp', function(data) {
+            console.log(data);
+            $("#LWP").append(data["text"]);
+      });
+  });
+</script>

@@ -2,10 +2,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Untitled Page</title>
-<meta name="generator" content="WYSIWYG Web Builder 8 - http://www.wysiwygwebbuilder.com">
-<link rel="stylesheet" href="Untitled1.css" type="text/css">
-<link rel="stylesheet" href="index.css" type="text/css">
+<title>Ajax test</title>
+<link rel="stylesheet" href="/css/style.css" type="text/css">
 
 <!-- Grab jQuery from a CDN, fall back to local if necessary -->
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -15,64 +13,6 @@
 
 </head>
 <body>
-<table style="position:absolute;left:30px;top:20px;width:517px;height:314px;z-index:0;" cellpadding="0" cellspacing="1" id="Table1">
-<tr>
-<td style="background-color:transparent;border:1px #C0C0C0 solid;text-align:left;vertical-align:top;width:252px;height:100px;">
-&nbsp;</td>
-<td style="background-color:transparent;border:1px #C0C0C0 solid;text-align:left;vertical-align:top;height:100px;">
-&nbsp;</td>
-</tr>
-<tr>
-<td style="background-color:transparent;border:1px #C0C0C0 solid;text-align:left;vertical-align:top;width:252px;height:100px;">
-&nbsp;</td>
-<td style="background-color:transparent;border:1px #C0C0C0 solid;text-align:left;vertical-align:top;height:100px;">
-&nbsp;</td>
-</tr>
-<tr>
-<td style="background-color:transparent;border:1px #C0C0C0 solid;text-align:left;vertical-align:top;width:252px;height:100px;">
-&nbsp;</td>
-<td style="background-color:transparent;border:1px #C0C0C0 solid;text-align:left;vertical-align:top;height:100px;">
-&nbsp;</td>
-</tr>
-</table>
-<div id="Html1" style="position:absolute;left:300px;top:30px;width:230px;height:80px;z-index:1">
-    <div id="whois"></div>
-     
-    <script>
-    $(document).ready(function() {
-        jQuery.get('/aj/whois', function(data) {
-            console.log(data);
-            $("#whois").html(data["text"]);
-        });
-    });
-    </script></div>
-<div id="Html2" style="position:absolute;left:300px;top:130px;width:230px;height:90px;z-index:2">
-    <div id="ping"></div>
-     
-    <script>
-    $(document).ready(function() {
-        jQuery.get('/aj/ping', function(data) {
-            console.log(data);
-            $("#ping").html(data["text"]);
-        });
-    });
-    </script></div>
-<div id="Html3" style="position:absolute;left:300px;top:240px;width:230px;height:80px;z-index:3">
-    <div id="LWP"></div>
-     
-    <script>
-    $(document).ready(function() {
-        jQuery.get('/aj/lwp', function(data) {
-            console.log(data);
-            $("#LWP").html(data["text"]);
-        });
-    });
-    </script></div>
-<div id="Html4" style="position:absolute;left:45px;top:36px;width:225px;height:74px;z-index:4">
-<h3>WHOIS</h3></div>
-<div id="Html5" style="position:absolute;left:50px;top:140px;width:225px;height:74px;z-index:5">
-<h3>PING</h3></div>
-<div id="Html6" style="position:absolute;left:50px;top:240px;width:225px;height:74px;z-index:6">
-<h3>LWP</h3></div>
+<% content %>
 </body>
 </html>

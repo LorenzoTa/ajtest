@@ -1,44 +1,30 @@
 package ajtest;
 use Dancer2;
-use LWP::UserAgent;
+use HTTP::Tiny;
+use Net::Ping;
 use Net::Whois::Raw;
 
-our $VERSION = '0.1';
+our $VERSION = '0.11';
 
 get '/' => sub {
     template 'index' => { 'title' => 'ajtest' };
 };
 
 get '/aj/whois' => sub {
-	header 'Content-Type' => 'application/json';
-	#my @ret =  whois('perl.org');
-	my $dominfo = whois('perl.org');
-	my $ret;
-	foreach my $it(split /\n/, $dominfo){
-		$ret=$1 if $it=~/Name Server: (.*)$/;
-	}
-    return to_json { text => "$ret" };
+    my @dominfo = split /\n/, whois('perl.org');
+    for ( reverse @dominfo ) {
+        send_as JSON => { text => $1 } if /Name Server: (\S+)/;
+    }
 };
 
-
 get '/aj/ping' => sub {
-     header 'Content-Type' => 'application/json';
-	 open my $cmd,'ping -n 4 www.perl.org|';
-	 my $ret;
-	 while (<$cmd>){
-		if($_=~/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/){
-			$ret = $1;
-		
-		}
-	 }
-	 return to_json { text => "$ret" };
+     my $ping = Net::Ping->new;
+     send_as JSON => { text => ($ping->ping('www.perl.org'))[2] };
 };
 
 get '/aj/lwp' => sub {
-	header 'Content-Type' => 'application/json';
-    my $ua = LWP::UserAgent->new;
-    my $r = $ua->get('http://www.perl.org/');
-	return to_json { text => $r->code." ".$r->message };
+    my $res = HTTP::Tiny->new->get('http://www.perl.org/');
+    send_as JSON => { text => $res->{'status'}." ".$res->{'reason'} };
 };
 
 true;
