@@ -23,9 +23,8 @@ get '/aj/ping' => sub {
 };
 
 get '/aj/lwp' => sub {
-    my $url = 'http://www.perl.org/';
-    my $ua = HTTP::Tiny->new;
-    send_as JSON => { text => join ' ', @{ $ua->get($url) }{'status','reason'} };
+    my $res = HTTP::Tiny->new->get('http://www.perl.org/');
+    send_as JSON => { text => $res->{'status'}." ".$res->{'reason'} };
 };
 
 true;
