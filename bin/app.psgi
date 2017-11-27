@@ -1,45 +1,32 @@
-#!/usr/bin/env perl
+package ajtest;
+use Dancer2;
+use HTTP::Tiny;
+use Net::Ping;
+use Net::Whois::Raw;
 
-use strict;
-use warnings;
-use FindBin;
-use lib "$FindBin::Bin/../lib";
+our $VERSION = '0.11';
 
+get '/:search_for?' => sub {
+    template 'index' => { 'title' => 'ajtest' };
+	# my $search = route_parameters->get('search_for');
+	# "searching for $search";
+};
 
-# use this block if you don't need middleware, and only have a single target Dancer app to run here
-use ajtest;
+get '/aj/whois' => sub {
+    my @dominfo = split /\n/, whois('perl.org');
+    for ( reverse @dominfo ) {
+        send_as JSON => { text => $1 } if /Name Server: (\S+)/;
+    }
+};
 
-ajtest->to_app;
+get '/aj/ping' => sub {
+     my $ping = Net::Ping->new;
+     send_as JSON => { text => ($ping->ping('www.perl.org'))[2] };
+};
 
-=begin comment
-# use this block if you want to include middleware such as Plack::Middleware::Deflater
+get '/aj/lwp' => sub {
+    my $res = HTTP::Tiny->new->get('http://www.perl.org/');
+    send_as JSON => { text => $res->{'status'}." ".$res->{'reason'} };
+};
 
-use ajtest;
-use Plack::Builder;
-
-builder {
-    enable 'Deflater';
-    ajtest->to_app;
-}
-
-=end comment
-
-=cut
-
-=begin comment
-# use this block if you want to mount several applications on different path
-
-use ajtest;
-use ajtest_admin;
-
-use Plack::Builder;
-
-builder {
-    mount '/'      => ajtest->to_app;
-    mount '/admin'      => ajtest_admin->to_app;
-}
-
-=end comment
-
-=cut
-
+true;
