@@ -2,3 +2,15 @@
     padding-right: 0.25em;
 }
 
+table {
+    border: 1px solid black;
+	background-color: #EEEEEE;
+	width: 50%;
+	text-align: left;
+	border-collapse: collapse;
+    
+}
+
+td {
+	border: 1px solid black;	
+} 
