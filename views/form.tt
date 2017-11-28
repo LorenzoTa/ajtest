@@ -3,3 +3,6 @@
         <input type=text size=30 name=search_for>        
         <input type=submit value=search>     
 </form>
+<% IF search_for %>
+  <div>searching for:  <% search_for %></div>
+<% END %>
