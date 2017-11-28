@@ -1,16 +1,38 @@
-<div>
-  <span class="label">WHOIS:</span><span id="whois"></span>
-</div>
-<div>
-  <span class="label">PING:</span><span id="ping"></span>
-</div>
-<div>
-  <span class="label">LWP:</span><span id="LWP"></span>
-</div>
+
+<table> 
+  <tr>
+    <td>
+		<div>
+			<span class="label">WHOIS:</span>
+		</div>
+	</td>
+	<td><span id="whois"></span></td>
+  </tr>
+  <tr>
+    <td>
+		<div>
+			<span class="label">PING:</span>
+		</div>
+	</td>
+	<td><span id="ping"></span></td> 
+   </tr>
+   <tr>
+   
+    <td>
+		<div>
+			<span class="label">LWP:
+		</div>
+	</td>
+	<td></span><span id="LWP"></span></td>
+  </tr>
+  
+</table>
+
 
 <script>
   $(document).ready(function() {
-      jQuery.get('/aj/whois', function(data) {
+		var my_domain = '/aj/whois';
+      jQuery.get( my_domain, function(data) {
           console.log(data);
           $("#whois").append(data["text"]);
       });
@@ -26,3 +48,4 @@
       });
   });
 </script>
+
