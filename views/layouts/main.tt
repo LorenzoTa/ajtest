@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Ajax test</title>
+<title><% title %></title>
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 
 <!-- Grab jQuery from a CDN, fall back to local if necessary -->
@@ -16,3 +16,4 @@
 <% content %>
 </body>
 </html>
+
