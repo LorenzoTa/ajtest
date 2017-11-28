@@ -18,14 +18,15 @@ get '/' => sub {
 	# POST request
 	if ( request->method() eq "POST" ) {
 		debug "post method";
-       # process form input
-       if ( query_parameters->get('search_for') ) {
+		# process form input
+       if ( query_parameters 'search_for')  { # nor query_parameters->get('search_for')
 			# debug "param defined"; this does not work, why?
-         debug "searching for ".query_parameters->get('search_for'); # this even does not show up
+            "defined ".(query_parameters 'search_for'); # this even does not show up
        }
-	"searching for 7 ==>".#query_parameters->get('search_for').
-			(param 'search_for')."<==" ;
-	#template 'form' => { 'title' => 'formtest POST'};
+	# this works unless a template is called
+	# "searching for ==>".(param 'search_for')."<==" ;
+	template 'form' => { 'title' => 'formtest POST',
+						 'search_for' => param 'search_for'};
     }
 	# GET request  
 	else {
