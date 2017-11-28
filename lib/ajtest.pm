@@ -23,7 +23,8 @@ get '/' => sub {
 			# debug "param defined"; this does not work, why?
          debug "searching for ".query_parameters->get('search_for'); # this even does not show up
        }
-	return "searching for ".query_parameters->get('search_for');
+	"searching for 7 ==>".#query_parameters->get('search_for').
+			(param 'search_for')."<==" ;
 	#template 'form' => { 'title' => 'formtest POST'};
     }
 	# GET request  
