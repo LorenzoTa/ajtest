@@ -24,6 +24,7 @@ get '/' => sub {
         template 'form' => {
             title      => 'Form Test',
             headline   => 'form test POST',
+            form_url   => '/form',
             search_for => param 'search_for', # least typing ;-)
         };
     }
