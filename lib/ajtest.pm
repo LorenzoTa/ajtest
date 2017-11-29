@@ -3,6 +3,7 @@ use Dancer2;
 use HTTP::Tiny;
 use Net::Ping;
 use Net::Whois::Raw;
+use Data::Dumper;
 
 our $VERSION = '0.12';
 
@@ -11,31 +12,29 @@ get '/' => sub {
 };
 
  any ['get', 'post'] => '/form' => sub {
-	#var form_url => uri_for('/form');
-	# template 'form' => { 'title' => 'form',
-						 # 'form_url' => 'http://127.0.0.1:5000/form'# uri_for('/form')
-	# };
-	# POST request
-	if ( request->method() eq "POST" ) {
-		debug "post method";
-		# process form input
-       if ( query_parameters 'search_for')  { # nor query_parameters->get('search_for')
-			# debug "param defined"; this does not work, why?
-            "defined ".(query_parameters 'search_for'); # this even does not show up
-       }
-	# this works unless a template is called
-	# "searching for ==>".(param 'search_for')."<==" ;
-	template 'form' => { 'title' => 'formtest POST',
-						 'search_for' => param 'search_for'};
-    }
-	# GET request  
-	else {
-		template 'form' => { 'title' => 'formtest GET',
-							 'form_url' => uri_for('/form') };
-	}
+    # POST request
+    if ( request->method() eq "POST" ) {
+        debug "method: POST";
+        debug 'All params: '          . Dumper { params };
+        debug 'One param from href: ' . params->{'search_for'};
+        debug 'Form params: '         . Dumper body_parameters->mixed; # see Hash::MultiValue
+        debug 'Param "search_for": '  . body_parameters->get('search_for');
+        debug 'Another way: '         . param 'search_for';
 
-	
-	
+        template 'form' => {
+            title      => 'Form Test',
+            headline   => 'form test POST',
+            search_for => param 'search_for', # least typing ;-)
+        };
+    }
+    # GET request  
+    else {
+        template 'form' => {
+            title    => 'Form Test',
+            headline => 'formtest GET',
+            form_url => '/form',
+        };
+    }
 };
 
 get '/aj/whois' => sub {
