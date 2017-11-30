@@ -14,7 +14,7 @@ get '/' => sub {
  any ['get', 'post'] => '/form' => sub {
     # POST request
     if ( request->method() eq "POST" ) {
-        debug "method: POST";
+        debug "--> method: POST";
         debug 'All params: '          . Dumper { params };
         debug 'One param from href: ' . params->{'search_for'};
         debug 'Form params: '         . Dumper body_parameters->mixed; # see Hash::MultiValue
