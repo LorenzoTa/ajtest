@@ -15,11 +15,11 @@ get '/' => sub {
     # POST request
     if ( request->method() eq "POST" ) {
         debug "--> method: POST";
-        debug 'All params: '          . Dumper { params };
-        debug 'One param from href: ' . params->{'search_for'};
-        debug 'Form params: '         . Dumper body_parameters->mixed; # see Hash::MultiValue
-        debug 'Param "search_for": '  . body_parameters->get('search_for');
-        debug 'Another way: '         . param 'search_for';
+        debug '--> All params: '          . Dumper { params };
+        debug '--> One param from href: ' . params->{'search_for'};
+        debug '--> Form params: '         . Dumper body_parameters->mixed; # see Hash::MultiValue
+        debug '--> Param "search_for": '  . body_parameters->get('search_for');
+        debug '--> Another way: '         . param 'search_for';
 
         template 'form' => {
             title      => 'Form Test',
