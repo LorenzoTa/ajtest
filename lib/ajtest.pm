@@ -5,10 +5,20 @@ use Net::Ping;
 use Net::Whois::Raw;
 use Data::Dumper;
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 get '/' => sub {
     template 'index' => { 'title' => 'ajtest' };
+};
+
+get '/index2' => sub {
+    template 'index2' => { 'title' => 'ajtest' };
+};
+get '/aj2/whois:search_for' => sub {
+    my @dominfo = split /\n/, whois(  route_parameters->get('search_for')  );
+    for ( reverse @dominfo ) {
+        send_as JSON => { text => $1 } if /Name Server: (\S+)/;
+    }
 };
 
  any ['get', 'post'] => '/form' => sub {
