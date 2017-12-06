@@ -15,7 +15,7 @@
   <tr>
     <td>
 		<div>
-			<span class="label">WHOIS:</span>
+			<span class="label">WHOIS </span>
 		</div>
 	</td>
 	<td><span id="whois"></span></td>
@@ -42,10 +42,18 @@
 
 <script>
   $(document).ready(function() {
-		var my_domain = '/aj2/whois/'.<% search_for %>;
+		var my_domain = '/aj2/whois/<% search_for %>';
+		
+	
       jQuery.get( my_domain, function(data) {
-          console.log(data);
-          $("#whois").append(data["text"]);
+            console.log(data);
+			
+			data["text"].replace(/\|/g, "<br>");
+		
+
+   	
+			
+            $("#whois").append(  data["text"].replace(/\|/g, "<br>")   );
       });
 
       jQuery.get('/aj/ping', function(data) {
